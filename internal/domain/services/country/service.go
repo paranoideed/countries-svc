@@ -9,12 +9,14 @@ import (
 )
 
 type Service struct {
-	db database
+	db  database
+	eve EventWriter
 }
 
-func NewService(db database) Service {
+func NewService(db database, eve EventWriter) Service {
 	return Service{
-		db: db,
+		db:  db,
+		eve: eve,
 	}
 }
 
@@ -40,4 +42,12 @@ type database interface {
 	) error
 
 	UpdateCountryStatus(ctx context.Context, countryID uuid.UUID, status string, updatedAt time.Time) error
+}
+
+type EventWriter interface {
+	UpdateCountryStatus(
+		ctx context.Context,
+		countryID uuid.UUID,
+		status string,
+	) error
 }

@@ -1,3 +1,3 @@
-package events
+package contracts
 
 const GroupID = "chains-basic"

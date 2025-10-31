@@ -2,6 +2,7 @@ package country
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/chains-lab/countries-svc/internal/domain/enum"
@@ -31,12 +32,12 @@ func (s Service) UpdateStatus(ctx context.Context, countryID uuid.UUID, status s
 		case enum.CountryStatusUnsupported,
 			enum.CountryStatusDeprecated:
 			//TODO event
-			//err = s.db.UpdateStatusForAllCountryCities(ctx, countryID, status, now)
-			//if err != nil {
-			//	return errx.ErrorInternal.Raise(
-			//		fmt.Errorf("failed to update city status, cause: %w", err),
-			//	)
-			//}
+			err = s.eve.UpdateCountryStatus(ctx, countryID, status)
+			if err != nil {
+				return errx.ErrorInternal.Raise(
+					fmt.Errorf("error updating country status, by event: %w", err),
+				)
+			}
 		}
 
 		err = s.db.UpdateCountryStatus(ctx, countryID, status, now)
