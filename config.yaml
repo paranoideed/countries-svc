@@ -1,0 +1,40 @@
+server:
+  name: "countries-svc"
+
+profile:
+  url: "http://localhost:8002/profiles-svc/v1/profiles"
+
+
+rest:
+  port: ":8003"
+  timeouts:
+    read: 15s #seconds
+    read_header: 15s #seconds
+    write: 15s #seconds
+    idle: 60s #seconds
+
+log:
+  level: "debug"
+  format: "text"
+
+
+database:
+  sql:
+    url: "postgresql://postgres:postgres@localhost:7777/postgres?sslmode=disable"
+
+jwt:
+  user:
+    access_token:
+      secret_key: "supersecretkey"
+      token_lifetime: 900
+  admin-invites:
+    secret_key: "invitesuperkey"
+
+kafka:
+  brokers:
+    - "re-news-kafka:XXXX"
+
+swagger:
+  enabled: true
+  url: "/swagger"
+  port: "XXXX"

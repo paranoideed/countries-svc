@@ -1,0 +1,211 @@
+openapi: 3.1.0
+info:
+  description: API documentation for countries-svc
+  title: countries-svc API
+  version: 0.1.0
+servers:
+- url: /
+paths:
+  /test:
+    post:
+      description: Test
+      responses:
+        "201":
+          description: successfully
+      tags:
+      - Test
+components:
+  schemas:
+    CreateCountry:
+      properties:
+        data:
+          $ref: "#/components/schemas/CreateCountry_data"
+      required:
+      - data
+    UpdateCountry:
+      properties:
+        data:
+          $ref: "#/components/schemas/UpdateCountry_data"
+      required:
+      - data
+    UpdateCountryStatus:
+      properties:
+        data:
+          $ref: "#/components/schemas/UpdateCountryStatus_data"
+      required:
+      - data
+    Country:
+      properties:
+        data:
+          $ref: "#/components/schemas/CountryData"
+      required:
+      - data
+    CountryData:
+      properties:
+        id:
+          description: country id
+          format: uuid
+          type: string
+        type:
+          enum:
+          - country
+          type: string
+        attributes:
+          $ref: "#/components/schemas/CountryAttributes"
+      required:
+      - attributes
+      - id
+      - type
+    CountryAttributes:
+      properties:
+        name:
+          description: country name
+          type: string
+        status:
+          description: country status
+          enum:
+          - active
+          - inactive
+          type: string
+        created_at:
+          description: creation date
+          format: date-time
+          type: string
+        updated_at:
+          description: last update date
+          format: date-time
+          type: string
+      required:
+      - created_at
+      - name
+      - status
+      - updated_at
+    CountriesCollection:
+      properties:
+        data:
+          items:
+            $ref: "#/components/schemas/CountryData"
+          type: array
+        links:
+          $ref: "#/components/schemas/PaginationData"
+      required:
+      - data
+      - links
+    Errors:
+      description: Standard JSON:API error
+      properties:
+        errors:
+          description: Non empty array of errors occurred during request processing
+          items:
+            $ref: "#/components/schemas/Errors_errors_inner"
+          type: array
+      required:
+      - errors
+    PaginationData:
+      properties:
+        page_number:
+          description: The current page number.
+          example: 1
+          format: int64
+          type: integer
+        page_size:
+          description: The number of items per page.
+          example: 10
+          format: int64
+          type: integer
+        total_items:
+          description: The total number of items available.
+          example: 100
+          format: int64
+          type: integer
+      required:
+      - page_number
+      - page_size
+      - total_items
+    CreateCountry_data_attributes:
+      properties:
+        name:
+          description: city name
+          type: string
+      required:
+      - name
+    CreateCountry_data:
+      properties:
+        type:
+          enum:
+          - create_country
+          type: string
+        attributes:
+          $ref: "#/components/schemas/CreateCountry_data_attributes"
+      required:
+      - attributes
+      - type
+    UpdateCountry_data_attributes:
+      properties:
+        name:
+          description: city name
+          type: string
+    UpdateCountry_data:
+      properties:
+        id:
+          description: country id
+          format: uuid
+          type: string
+        type:
+          enum:
+          - update_country
+          type: string
+        attributes:
+          $ref: "#/components/schemas/UpdateCountry_data_attributes"
+      required:
+      - attributes
+      - id
+      - type
+    UpdateCountryStatus_data_attributes:
+      properties:
+        status:
+          description: new country status
+          type: string
+      required:
+      - status
+    UpdateCountryStatus_data:
+      properties:
+        id:
+          description: country id
+          format: uuid
+          type: string
+        type:
+          enum:
+          - update_country_status
+          type: string
+        attributes:
+          $ref: "#/components/schemas/UpdateCountryStatus_data_attributes"
+      required:
+      - attributes
+      - id
+      - type
+    Errors_errors_inner:
+      properties:
+        title:
+          description: "Title is a short, human-readable summary of the problem"
+          example: Bad Request
+          type: string
+        detail:
+          description: Detail is a human-readable explanation specific to this occurrence
+            of the problem
+          example: Request body was expected
+          type: string
+        status:
+          description: Status is the HTTP status code applicable to this problem
+          enum:
+          - 400
+          - 401
+          - 403
+          - 404
+          - 409
+          - 500
+          example: 400
+          type: integer
+      required:
+      - status
+      - title
