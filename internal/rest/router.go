@@ -45,11 +45,8 @@ func Run(ctx context.Context, cfg internal.Config, log logium.Logger, m Middlewa
 				r.Route("/{country_id}", func(r chi.Router) {
 					r.Get("/", h.GetCountry)
 
-					r.Group(func(r chi.Router) {
-						r.Use(auth, sysadmin)
-						r.Put("/", h.UpdateCountry)
-						r.Put("/status", h.UpdateCountryStatus)
-					})
+					r.With(auth, sysadmin).Put("/", h.UpdateCountry)
+					r.With(auth, sysadmin).Patch("/status", h.UpdateCountryStatus)
 				})
 			})
 		})
