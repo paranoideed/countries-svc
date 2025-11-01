@@ -11,8 +11,6 @@ func Country(m models.Country) resources.Country {
 			Id:   m.ID,
 			Type: resources.CountryType,
 			Attributes: resources.CountryAttributes{
-				Name:      m.Name,
-				Status:    m.Status,
 				CreatedAt: m.CreatedAt,
 				UpdatedAt: m.UpdatedAt,
 			},

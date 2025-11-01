@@ -22,22 +22,18 @@ components:
         data:
           type: object
           required:
+            - id
             - type
-            - attributes
           properties:
             type:
               type: string
               enum:
-                - create_country
-            attributes:
-              type: object
-              required:
-                - name
-              properties:
-                name:
-                  type: string
-                  description: city name
-    UpdateCountry:
+                - countries
+            id:
+              type: string
+              description: ISO 3166-1 alpha-3
+              pattern: '^[A-Z]{3}$'
+    UpdateCountryPolicy:
       type: object
       required:
         - data
@@ -51,46 +47,20 @@ components:
           properties:
             id:
               type: string
-              format: uuid
+              format: iso3
               description: country id
             type:
               type: string
               enum:
-                - update_country
+                - update_country_policy
             attributes:
               type: object
               properties:
-                name:
-                  type: string
-                  description: city name
-    UpdateCountryStatus:
-      type: object
-      required:
-        - data
-      properties:
-        data:
-          type: object
-          required:
-            - id
-            - type
-            - attributes
-          properties:
-            id:
-              type: string
-              format: uuid
-              description: country id
-            type:
-              type: string
-              enum:
-                - update_country_status
-            attributes:
-              type: object
-              required:
-                - status
-              properties:
-                status:
-                  type: string
-                  description: new country status
+                cities_allowed_statuses:
+                  type: array
+                  description: List of acceptable statuses for city in this country
+                  items:
+                    type: string
     Country:
       type: object
       required:
@@ -107,7 +77,7 @@ components:
       properties:
         id:
           type: string
-          format: uuid
+          format: iso3
           description: country id
         type:
           type: string
@@ -118,20 +88,9 @@ components:
     CountryAttributes:
       type: object
       required:
-        - name
-        - status
         - created_at
         - updated_at
       properties:
-        name:
-          type: string
-          description: country name
-        status:
-          type: string
-          enum:
-            - active
-            - inactive
-          description: country status
         created_at:
           type: string
           format: date-time
@@ -150,6 +109,62 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/CountryData'
+        links:
+          $ref: '#/components/schemas/PaginationData'
+    CountryPolicy:
+      type: object
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/components/schemas/CountryPolicyData'
+    CountryPolicyData:
+      type: object
+      required:
+        - id
+        - type
+        - attributes
+      properties:
+        id:
+          type: string
+          format: iso3
+          description: country id
+        type:
+          type: string
+          enum:
+            - country_policy
+        attributes:
+          $ref: '#/components/schemas/CountryPolicyAttributes'
+    CountryPolicyAttributes:
+      type: object
+      required:
+        - cities_allowed_statuses
+        - created_at
+        - updated_at
+      properties:
+        cities_allowed_statuses:
+          type: array
+          description: List of allowed statuses for cities in the country
+          items:
+            type: string
+        created_at:
+          type: string
+          format: date-time
+          description: creation date
+        updated_at:
+          type: string
+          format: date-time
+          description: last update date
+    CountryPoliciesCollection:
+      type: object
+      required:
+        - data
+        - links
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/CountryPolicyData'
         links:
           $ref: '#/components/schemas/PaginationData'
     Errors:

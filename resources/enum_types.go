@@ -2,8 +2,7 @@ package resources
 
 const (
 	CountryType = "country"
+	PolicyType  = "country_policy"
 
-	CreateCountryType       = "create_country"
-	UpdateCountryType       = "update_country"
-	UpdateCountryStatusType = "update_country_status"
+	UpdateCountryPolicyType = "update_country_policy"
 )

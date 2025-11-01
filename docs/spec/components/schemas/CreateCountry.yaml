@@ -5,17 +5,13 @@ properties:
   data:
     type: object
     required:
+      - id
       - type
-      - attributes
     properties:
       type:
         type: string
-        enum: [ create_country ]
-      attributes:
-        type: object
-        required:
-          - name
-        properties:
-          name:
-            type: string
-            description: "city name"
+        enum: [countries]
+      id:
+        type: string
+        description: "ISO 3166-1 alpha-3"
+        pattern: "^[A-Z]{3}$"

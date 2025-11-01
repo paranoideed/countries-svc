@@ -1,4 +1,4 @@
-# CountryData
+# CountryPolicyData
 
 ## Properties
 
@@ -6,83 +6,83 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Id** | **string** | country id | 
 **Type** | **string** |  | 
-**Attributes** | [**CountryAttributes**](CountryAttributes.md) |  | 
+**Attributes** | [**CountryPolicyAttributes**](CountryPolicyAttributes.md) |  | 
 
 ## Methods
 
-### NewCountryData
+### NewCountryPolicyData
 
-`func NewCountryData(id string, type_ string, attributes CountryAttributes, ) *CountryData`
+`func NewCountryPolicyData(id string, type_ string, attributes CountryPolicyAttributes, ) *CountryPolicyData`
 
-NewCountryData instantiates a new CountryData object
+NewCountryPolicyData instantiates a new CountryPolicyData object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewCountryDataWithDefaults
+### NewCountryPolicyDataWithDefaults
 
-`func NewCountryDataWithDefaults() *CountryData`
+`func NewCountryPolicyDataWithDefaults() *CountryPolicyData`
 
-NewCountryDataWithDefaults instantiates a new CountryData object
+NewCountryPolicyDataWithDefaults instantiates a new CountryPolicyData object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetId
 
-`func (o *CountryData) GetId() string`
+`func (o *CountryPolicyData) GetId() string`
 
 GetId returns the Id field if non-nil, zero value otherwise.
 
 ### GetIdOk
 
-`func (o *CountryData) GetIdOk() (*string, bool)`
+`func (o *CountryPolicyData) GetIdOk() (*string, bool)`
 
 GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetId
 
-`func (o *CountryData) SetId(v string)`
+`func (o *CountryPolicyData) SetId(v string)`
 
 SetId sets Id field to given value.
 
 
 ### GetType
 
-`func (o *CountryData) GetType() string`
+`func (o *CountryPolicyData) GetType() string`
 
 GetType returns the Type field if non-nil, zero value otherwise.
 
 ### GetTypeOk
 
-`func (o *CountryData) GetTypeOk() (*string, bool)`
+`func (o *CountryPolicyData) GetTypeOk() (*string, bool)`
 
 GetTypeOk returns a tuple with the Type field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetType
 
-`func (o *CountryData) SetType(v string)`
+`func (o *CountryPolicyData) SetType(v string)`
 
 SetType sets Type field to given value.
 
 
 ### GetAttributes
 
-`func (o *CountryData) GetAttributes() CountryAttributes`
+`func (o *CountryPolicyData) GetAttributes() CountryPolicyAttributes`
 
 GetAttributes returns the Attributes field if non-nil, zero value otherwise.
 
 ### GetAttributesOk
 
-`func (o *CountryData) GetAttributesOk() (*CountryAttributes, bool)`
+`func (o *CountryPolicyData) GetAttributesOk() (*CountryPolicyAttributes, bool)`
 
 GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetAttributes
 
-`func (o *CountryData) SetAttributes(v CountryAttributes)`
+`func (o *CountryPolicyData) SetAttributes(v CountryPolicyAttributes)`
 
 SetAttributes sets Attributes field to given value.
 

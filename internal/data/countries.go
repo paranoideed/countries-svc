@@ -4,46 +4,43 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"time"
 
 	"github.com/chains-lab/countries-svc/internal/data/pgdb"
 	"github.com/chains-lab/countries-svc/internal/domain/models"
 	"github.com/chains-lab/countries-svc/internal/domain/services/country"
 	"github.com/chains-lab/restkit/pagi"
-	"github.com/google/uuid"
 )
 
-func (d *Database) CreateCountry(ctx context.Context, country models.Country) (models.Country, error) {
-	schema := pgdb.Country{
+func (d *Database) CreateCountry(ctx context.Context, country models.Country) (models.Country, models.Policy, error) {
+	err := d.sql.countries.New().Insert(ctx, pgdb.Country{
 		ID:        country.ID,
-		Name:      country.Name,
-		Status:    country.Status,
 		CreatedAt: country.CreatedAt,
 		UpdatedAt: country.UpdatedAt,
-	}
-
-	err := d.sql.countries.New().Insert(ctx, schema)
+	})
 	if err != nil {
-		return models.Country{}, err
+		return models.Country{}, models.Policy{}, err
 	}
 
-	return country, nil
+	err = d.sql.policies.New().Insert(ctx, pgdb.Policy{
+		CountryID:             country.ID,
+		CitiesAllowedStatuses: []string{},
+		CreatedAt:             country.CreatedAt,
+		UpdatedAt:             country.UpdatedAt,
+	})
+	if err != nil {
+		return models.Country{}, models.Policy{}, err
+	}
+
+	return country, models.Policy{
+		CountryID:             country.ID,
+		CitiesAllowedStatuses: []string{},
+		CreatedAt:             country.CreatedAt,
+		UpdatedAt:             country.UpdatedAt,
+	}, nil
 }
 
-func (d *Database) GetCountryByID(ctx context.Context, ID uuid.UUID) (models.Country, error) {
+func (d *Database) GetCountryByID(ctx context.Context, ID string) (models.Country, error) {
 	c, err := d.sql.countries.New().FilterID(ID).Get(ctx)
-	switch {
-	case errors.Is(err, sql.ErrNoRows):
-		return models.Country{}, nil
-	case err != nil:
-		return models.Country{}, err
-	}
-
-	return countrySchemaToModel(c), err
-}
-
-func (d *Database) GetCountryByName(ctx context.Context, name string) (models.Country, error) {
-	c, err := d.sql.countries.New().FilterName(name).Get(ctx)
 	switch {
 	case errors.Is(err, sql.ErrNoRows):
 		return models.Country{}, nil
@@ -56,18 +53,15 @@ func (d *Database) GetCountryByName(ctx context.Context, name string) (models.Co
 
 func (d *Database) FilterCountries(
 	ctx context.Context,
-	filters country.FilterParams,
+	filters country.FilterCountryParams,
 	page, size uint64,
 ) (models.CountriesCollection, error) {
 	limit, offset := pagi.PagConvert(page, size)
 
 	query := d.sql.countries.New()
 
-	if filters.Name != nil {
-		query.FilterNameLike(*filters.Name)
-	}
-	if filters.Statuses != nil {
-		query.FilterStatus(filters.Statuses...)
+	if filters.IDs != nil {
+		query = query.FilterID(filters.IDs...)
 	}
 
 	rows, err := query.Page(limit, offset).Select(ctx)
@@ -93,31 +87,9 @@ func (d *Database) FilterCountries(
 	}, nil
 }
 
-func (d *Database) UpdateCountry(
-	ctx context.Context,
-	countryID uuid.UUID,
-	params country.UpdateParams,
-	updatedAt time.Time,
-) error {
-	q := d.sql.countries.New().FilterID(countryID)
-
-	if params.Name != nil {
-		q = q.UpdateName(*params.Name)
-	}
-
-	return q.Update(ctx, updatedAt)
-}
-
-func (d *Database) UpdateCountryStatus(ctx context.Context, countryID uuid.UUID, status string, updatedAt time.Time) error {
-	err := d.sql.countries.New().FilterID(countryID).UpdateStatus(status).Update(ctx, updatedAt)
-	return err
-}
-
 func countrySchemaToModel(row pgdb.Country) models.Country {
 	return models.Country{
 		ID:        row.ID,
-		Name:      row.Name,
-		Status:    row.Status,
 		CreatedAt: row.CreatedAt,
 		UpdatedAt: row.UpdatedAt,
 	}

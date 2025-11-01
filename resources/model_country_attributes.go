@@ -22,10 +22,6 @@ var _ MappedNullable = &CountryAttributes{}
 
 // CountryAttributes struct for CountryAttributes
 type CountryAttributes struct {
-	// country name
-	Name string `json:"name"`
-	// country status
-	Status string `json:"status"`
 	// creation date
 	CreatedAt time.Time `json:"created_at"`
 	// last update date
@@ -38,10 +34,8 @@ type _CountryAttributes CountryAttributes
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCountryAttributes(name string, status string, createdAt time.Time, updatedAt time.Time) *CountryAttributes {
+func NewCountryAttributes(createdAt time.Time, updatedAt time.Time) *CountryAttributes {
 	this := CountryAttributes{}
-	this.Name = name
-	this.Status = status
 	this.CreatedAt = createdAt
 	this.UpdatedAt = updatedAt
 	return &this
@@ -53,54 +47,6 @@ func NewCountryAttributes(name string, status string, createdAt time.Time, updat
 func NewCountryAttributesWithDefaults() *CountryAttributes {
 	this := CountryAttributes{}
 	return &this
-}
-
-// GetName returns the Name field value
-func (o *CountryAttributes) GetName() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Name
-}
-
-// GetNameOk returns a tuple with the Name field value
-// and a boolean to check if the value has been set.
-func (o *CountryAttributes) GetNameOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Name, true
-}
-
-// SetName sets field value
-func (o *CountryAttributes) SetName(v string) {
-	o.Name = v
-}
-
-// GetStatus returns the Status field value
-func (o *CountryAttributes) GetStatus() string {
-	if o == nil {
-		var ret string
-		return ret
-	}
-
-	return o.Status
-}
-
-// GetStatusOk returns a tuple with the Status field value
-// and a boolean to check if the value has been set.
-func (o *CountryAttributes) GetStatusOk() (*string, bool) {
-	if o == nil {
-		return nil, false
-	}
-	return &o.Status, true
-}
-
-// SetStatus sets field value
-func (o *CountryAttributes) SetStatus(v string) {
-	o.Status = v
 }
 
 // GetCreatedAt returns the CreatedAt field value
@@ -161,8 +107,6 @@ func (o CountryAttributes) MarshalJSON() ([]byte, error) {
 
 func (o CountryAttributes) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["name"] = o.Name
-	toSerialize["status"] = o.Status
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
 	return toSerialize, nil
@@ -173,8 +117,6 @@ func (o *CountryAttributes) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"name",
-		"status",
 		"created_at",
 		"updated_at",
 	}

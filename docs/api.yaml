@@ -19,10 +19,8 @@ components:
     #requests
     CreateCountry:
       $ref: './spec/components/schemas/CreateCountry.yaml'
-    UpdateCountry:
-      $ref: './spec/components/schemas/UpdateCountry.yaml'
-    UpdateCountryStatus:
-      $ref: './spec/components/schemas/UpdateCountryStatus.yaml'
+    UpdateCountryPolicy:
+      $ref: './spec/components/schemas/UpdateCountryPolicies.yaml'
 
     #responses
     Country:
@@ -33,6 +31,15 @@ components:
       $ref: './spec/components/schemas/CountryAttributes.yaml'
     CountriesCollection:
       $ref: './spec/components/schemas/CountriesCollection.yaml'
+
+    CountryPolicy:
+      $ref: './spec/components/schemas/CountryPolicy.yaml'
+    CountryPolicyData:
+      $ref: './spec/components/schemas/CountryPolicyData.yaml'
+    CountryPolicyAttributes:
+      $ref: './spec/components/schemas/CountryPolicyAttributes.yaml'
+    CountryPoliciesCollection:
+      $ref: './spec/components/schemas/CountryPolicyCollection.yaml'
 
     Errors:
       $ref: './spec/components/schemas/Errors.yaml'

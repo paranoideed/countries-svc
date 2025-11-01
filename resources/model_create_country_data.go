@@ -22,7 +22,8 @@ var _ MappedNullable = &CreateCountryData{}
 // CreateCountryData struct for CreateCountryData
 type CreateCountryData struct {
 	Type string `json:"type"`
-	Attributes CreateCountryDataAttributes `json:"attributes"`
+	// ISO 3166-1 alpha-3
+	Id string `json:"id" validate:"regexp=^[A-Z]{3}$"`
 }
 
 type _CreateCountryData CreateCountryData
@@ -31,10 +32,10 @@ type _CreateCountryData CreateCountryData
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateCountryData(type_ string, attributes CreateCountryDataAttributes) *CreateCountryData {
+func NewCreateCountryData(type_ string, id string) *CreateCountryData {
 	this := CreateCountryData{}
 	this.Type = type_
-	this.Attributes = attributes
+	this.Id = id
 	return &this
 }
 
@@ -70,28 +71,28 @@ func (o *CreateCountryData) SetType(v string) {
 	o.Type = v
 }
 
-// GetAttributes returns the Attributes field value
-func (o *CreateCountryData) GetAttributes() CreateCountryDataAttributes {
+// GetId returns the Id field value
+func (o *CreateCountryData) GetId() string {
 	if o == nil {
-		var ret CreateCountryDataAttributes
+		var ret string
 		return ret
 	}
 
-	return o.Attributes
+	return o.Id
 }
 
-// GetAttributesOk returns a tuple with the Attributes field value
+// GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *CreateCountryData) GetAttributesOk() (*CreateCountryDataAttributes, bool) {
+func (o *CreateCountryData) GetIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
-	return &o.Attributes, true
+	return &o.Id, true
 }
 
-// SetAttributes sets field value
-func (o *CreateCountryData) SetAttributes(v CreateCountryDataAttributes) {
-	o.Attributes = v
+// SetId sets field value
+func (o *CreateCountryData) SetId(v string) {
+	o.Id = v
 }
 
 func (o CreateCountryData) MarshalJSON() ([]byte, error) {
@@ -105,7 +106,7 @@ func (o CreateCountryData) MarshalJSON() ([]byte, error) {
 func (o CreateCountryData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["type"] = o.Type
-	toSerialize["attributes"] = o.Attributes
+	toSerialize["id"] = o.Id
 	return toSerialize, nil
 }
 
@@ -115,7 +116,7 @@ func (o *CreateCountryData) UnmarshalJSON(data []byte) (err error) {
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
 		"type",
-		"attributes",
+		"id",
 	}
 
 	allProperties := make(map[string]interface{})

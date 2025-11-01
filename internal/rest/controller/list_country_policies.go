@@ -2,7 +2,6 @@ package controller
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/chains-lab/ape"
 	"github.com/chains-lab/ape/problems"
@@ -12,26 +11,22 @@ import (
 	"github.com/chains-lab/restkit/pagi"
 )
 
-func (a Service) ListCountries(w http.ResponseWriter, r *http.Request) {
+func (a Service) ListCountryPolicies(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	q := r.URL.Query()
 
-	filters := country.FilterParams{}
+	filters := country.FilterPoliciesParams{}
 
-	if name := strings.TrimSpace(q.Get("name")); name != "" {
-		filters.Name = &name
-	}
-
-	if sts := q["status"]; len(sts) > 0 {
-		filters.Statuses = sts
+	if sts := q["country_id"]; len(sts) > 0 {
+		filters.CountryIDs = sts
 	}
 
 	page, size := pagi.GetPagination(r)
 
-	countries, err := a.domain.country.Filter(ctx, filters, page, size)
+	policies, err := a.domain.country.FilterPolicies(ctx, filters, page, size)
 	if err != nil {
-		a.log.WithError(err).Error("failed to search countries")
+		a.log.WithError(err).Error("failed to search policies")
 		switch {
 		default:
 			ape.RenderErr(w, problems.InternalError())
@@ -40,5 +35,5 @@ func (a Service) ListCountries(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	ape.Render(w, http.StatusOK, responses.CountriesCollection(countries))
+	ape.Render(w, http.StatusOK, responses.PoliciesCollection(policies))
 }

@@ -14,7 +14,7 @@ require (
 	github.com/go-ozzo/ozzo-validation/v4 v4.3.0
 	github.com/google/uuid v1.6.0
 	github.com/lib/pq v1.10.9
-	github.com/paulmach/orb v0.12.0
+	github.com/pariz/gountries v0.1.6
 	github.com/pkg/errors v0.9.1
 	github.com/rubenv/sql-migrate v1.8.0
 	github.com/segmentio/kafka-go v0.4.49
@@ -44,4 +44,5 @@ require (
 	go.yaml.in/yaml/v3 v3.0.4 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/text v0.28.0 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
 )

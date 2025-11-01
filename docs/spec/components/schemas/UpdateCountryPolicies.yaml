@@ -12,16 +12,16 @@ properties:
     properties:
       id:
         type: string
-        format: uuid
+        format: iso3
         description: "country id"
       type:
         type: string
-        enum: [ update_country_status ]
+        enum: [ update_country_policy ]
       attributes:
         type: object
-        required:
-          - status
         properties:
-          status:
-            type: string
-            description: "new country status"
+          cities_allowed_statuses:
+            type: array
+            description: "List of acceptable statuses for city in this country"
+            items:
+              type: string

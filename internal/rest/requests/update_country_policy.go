@@ -10,7 +10,7 @@ import (
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 )
 
-func UpdateCountry(r *http.Request) (req resources.UpdateCountry, err error) {
+func UpdateCountryPolity(r *http.Request) (req resources.UpdateCountryPolicy, err error) {
 	if err = json.NewDecoder(r.Body).Decode(&req); err != nil {
 		err = newDecodeError("body", err)
 		return
@@ -18,11 +18,11 @@ func UpdateCountry(r *http.Request) (req resources.UpdateCountry, err error) {
 
 	errs := validation.Errors{
 		"data/id":         validation.Validate(req.Data.Id, validation.Required),
-		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.UpdateCountryType)),
+		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.UpdateCountryPolicyType)),
 		"data/attributes": validation.Validate(req.Data.Attributes, validation.Required),
 	}
 
-	if chi.URLParam(r, "country_id") != req.Data.Id.String() {
+	if chi.URLParam(r, "country_id") != req.Data.Id {
 		errs["data/id"] = fmt.Errorf("country_id in path and body must match")
 	}
 

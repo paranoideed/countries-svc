@@ -29,12 +29,12 @@ func (a Service) CreateCountry(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	country, err := a.domain.country.Create(r.Context(), req.Data.Attributes.Name)
+	country, err := a.domain.country.CreateCountry(r.Context(), req.Data.Id)
 	if err != nil {
 		a.log.WithError(err).Error("error creating country")
 		switch {
-		case errors.Is(err, errx.ErrorCountryAlreadyExistsWithThisName):
-			ape.RenderErr(w, problems.Conflict("country with this name already exists"))
+		case errors.Is(err, errx.ErrorCountryAlreadyExistsWithThisID):
+			ape.RenderErr(w, problems.Conflict("country with this id already exists"))
 		default:
 			ape.RenderErr(w, problems.InternalError())
 		}
@@ -42,7 +42,7 @@ func (a Service) CreateCountry(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	a.log.Infof("created country with name %s by user %s", country.Name, initiator.ID)
+	a.log.Infof("created country with name %s by user %s", country.ID, initiator.ID)
 
 	ape.Render(w, http.StatusCreated, responses.Country(country))
 }

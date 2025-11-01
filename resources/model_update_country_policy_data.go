@@ -12,48 +12,47 @@ package resources
 
 import (
 	"encoding/json"
-	"github.com/google/uuid"
 	"bytes"
 	"fmt"
 )
 
-// checks if the UpdateCountryStatusData type satisfies the MappedNullable interface at compile time
-var _ MappedNullable = &UpdateCountryStatusData{}
+// checks if the UpdateCountryPolicyData type satisfies the MappedNullable interface at compile time
+var _ MappedNullable = &UpdateCountryPolicyData{}
 
-// UpdateCountryStatusData struct for UpdateCountryStatusData
-type UpdateCountryStatusData struct {
+// UpdateCountryPolicyData struct for UpdateCountryPolicyData
+type UpdateCountryPolicyData struct {
 	// country id
-	Id uuid.UUID `json:"id"`
+	Id string `json:"id"`
 	Type string `json:"type"`
-	Attributes UpdateCountryStatusDataAttributes `json:"attributes"`
+	Attributes UpdateCountryPolicyDataAttributes `json:"attributes"`
 }
 
-type _UpdateCountryStatusData UpdateCountryStatusData
+type _UpdateCountryPolicyData UpdateCountryPolicyData
 
-// NewUpdateCountryStatusData instantiates a new UpdateCountryStatusData object
+// NewUpdateCountryPolicyData instantiates a new UpdateCountryPolicyData object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewUpdateCountryStatusData(id uuid.UUID, type_ string, attributes UpdateCountryStatusDataAttributes) *UpdateCountryStatusData {
-	this := UpdateCountryStatusData{}
+func NewUpdateCountryPolicyData(id string, type_ string, attributes UpdateCountryPolicyDataAttributes) *UpdateCountryPolicyData {
+	this := UpdateCountryPolicyData{}
 	this.Id = id
 	this.Type = type_
 	this.Attributes = attributes
 	return &this
 }
 
-// NewUpdateCountryStatusDataWithDefaults instantiates a new UpdateCountryStatusData object
+// NewUpdateCountryPolicyDataWithDefaults instantiates a new UpdateCountryPolicyData object
 // This constructor will only assign default values to properties that have it defined,
 // but it doesn't guarantee that properties required by API are set
-func NewUpdateCountryStatusDataWithDefaults() *UpdateCountryStatusData {
-	this := UpdateCountryStatusData{}
+func NewUpdateCountryPolicyDataWithDefaults() *UpdateCountryPolicyData {
+	this := UpdateCountryPolicyData{}
 	return &this
 }
 
 // GetId returns the Id field value
-func (o *UpdateCountryStatusData) GetId() uuid.UUID {
+func (o *UpdateCountryPolicyData) GetId() string {
 	if o == nil {
-		var ret uuid.UUID
+		var ret string
 		return ret
 	}
 
@@ -62,7 +61,7 @@ func (o *UpdateCountryStatusData) GetId() uuid.UUID {
 
 // GetIdOk returns a tuple with the Id field value
 // and a boolean to check if the value has been set.
-func (o *UpdateCountryStatusData) GetIdOk() (*uuid.UUID, bool) {
+func (o *UpdateCountryPolicyData) GetIdOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -70,12 +69,12 @@ func (o *UpdateCountryStatusData) GetIdOk() (*uuid.UUID, bool) {
 }
 
 // SetId sets field value
-func (o *UpdateCountryStatusData) SetId(v uuid.UUID) {
+func (o *UpdateCountryPolicyData) SetId(v string) {
 	o.Id = v
 }
 
 // GetType returns the Type field value
-func (o *UpdateCountryStatusData) GetType() string {
+func (o *UpdateCountryPolicyData) GetType() string {
 	if o == nil {
 		var ret string
 		return ret
@@ -86,7 +85,7 @@ func (o *UpdateCountryStatusData) GetType() string {
 
 // GetTypeOk returns a tuple with the Type field value
 // and a boolean to check if the value has been set.
-func (o *UpdateCountryStatusData) GetTypeOk() (*string, bool) {
+func (o *UpdateCountryPolicyData) GetTypeOk() (*string, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -94,14 +93,14 @@ func (o *UpdateCountryStatusData) GetTypeOk() (*string, bool) {
 }
 
 // SetType sets field value
-func (o *UpdateCountryStatusData) SetType(v string) {
+func (o *UpdateCountryPolicyData) SetType(v string) {
 	o.Type = v
 }
 
 // GetAttributes returns the Attributes field value
-func (o *UpdateCountryStatusData) GetAttributes() UpdateCountryStatusDataAttributes {
+func (o *UpdateCountryPolicyData) GetAttributes() UpdateCountryPolicyDataAttributes {
 	if o == nil {
-		var ret UpdateCountryStatusDataAttributes
+		var ret UpdateCountryPolicyDataAttributes
 		return ret
 	}
 
@@ -110,7 +109,7 @@ func (o *UpdateCountryStatusData) GetAttributes() UpdateCountryStatusDataAttribu
 
 // GetAttributesOk returns a tuple with the Attributes field value
 // and a boolean to check if the value has been set.
-func (o *UpdateCountryStatusData) GetAttributesOk() (*UpdateCountryStatusDataAttributes, bool) {
+func (o *UpdateCountryPolicyData) GetAttributesOk() (*UpdateCountryPolicyDataAttributes, bool) {
 	if o == nil {
 		return nil, false
 	}
@@ -118,11 +117,11 @@ func (o *UpdateCountryStatusData) GetAttributesOk() (*UpdateCountryStatusDataAtt
 }
 
 // SetAttributes sets field value
-func (o *UpdateCountryStatusData) SetAttributes(v UpdateCountryStatusDataAttributes) {
+func (o *UpdateCountryPolicyData) SetAttributes(v UpdateCountryPolicyDataAttributes) {
 	o.Attributes = v
 }
 
-func (o UpdateCountryStatusData) MarshalJSON() ([]byte, error) {
+func (o UpdateCountryPolicyData) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
 		return []byte{}, err
@@ -130,7 +129,7 @@ func (o UpdateCountryStatusData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(toSerialize)
 }
 
-func (o UpdateCountryStatusData) ToMap() (map[string]interface{}, error) {
+func (o UpdateCountryPolicyData) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["id"] = o.Id
 	toSerialize["type"] = o.Type
@@ -138,7 +137,7 @@ func (o UpdateCountryStatusData) ToMap() (map[string]interface{}, error) {
 	return toSerialize, nil
 }
 
-func (o *UpdateCountryStatusData) UnmarshalJSON(data []byte) (err error) {
+func (o *UpdateCountryPolicyData) UnmarshalJSON(data []byte) (err error) {
 	// This validates that all required properties are included in the JSON object
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
@@ -162,53 +161,53 @@ func (o *UpdateCountryStatusData) UnmarshalJSON(data []byte) (err error) {
 		}
 	}
 
-	varUpdateCountryStatusData := _UpdateCountryStatusData{}
+	varUpdateCountryPolicyData := _UpdateCountryPolicyData{}
 
 	decoder := json.NewDecoder(bytes.NewReader(data))
 	decoder.DisallowUnknownFields()
-	err = decoder.Decode(&varUpdateCountryStatusData)
+	err = decoder.Decode(&varUpdateCountryPolicyData)
 
 	if err != nil {
 		return err
 	}
 
-	*o = UpdateCountryStatusData(varUpdateCountryStatusData)
+	*o = UpdateCountryPolicyData(varUpdateCountryPolicyData)
 
 	return err
 }
 
-type NullableUpdateCountryStatusData struct {
-	value *UpdateCountryStatusData
+type NullableUpdateCountryPolicyData struct {
+	value *UpdateCountryPolicyData
 	isSet bool
 }
 
-func (v NullableUpdateCountryStatusData) Get() *UpdateCountryStatusData {
+func (v NullableUpdateCountryPolicyData) Get() *UpdateCountryPolicyData {
 	return v.value
 }
 
-func (v *NullableUpdateCountryStatusData) Set(val *UpdateCountryStatusData) {
+func (v *NullableUpdateCountryPolicyData) Set(val *UpdateCountryPolicyData) {
 	v.value = val
 	v.isSet = true
 }
 
-func (v NullableUpdateCountryStatusData) IsSet() bool {
+func (v NullableUpdateCountryPolicyData) IsSet() bool {
 	return v.isSet
 }
 
-func (v *NullableUpdateCountryStatusData) Unset() {
+func (v *NullableUpdateCountryPolicyData) Unset() {
 	v.value = nil
 	v.isSet = false
 }
 
-func NewNullableUpdateCountryStatusData(val *UpdateCountryStatusData) *NullableUpdateCountryStatusData {
-	return &NullableUpdateCountryStatusData{value: val, isSet: true}
+func NewNullableUpdateCountryPolicyData(val *UpdateCountryPolicyData) *NullableUpdateCountryPolicyData {
+	return &NullableUpdateCountryPolicyData{value: val, isSet: true}
 }
 
-func (v NullableUpdateCountryStatusData) MarshalJSON() ([]byte, error) {
+func (v NullableUpdateCountryPolicyData) MarshalJSON() ([]byte, error) {
 	return json.Marshal(v.value)
 }
 
-func (v *NullableUpdateCountryStatusData) UnmarshalJSON(src []byte) error {
+func (v *NullableUpdateCountryPolicyData) UnmarshalJSON(src []byte) error {
 	v.isSet = true
 	return json.Unmarshal(src, &v.value)
 }

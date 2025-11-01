@@ -17,14 +17,14 @@ func (d *Database) Transaction(ctx context.Context, fn func(ctx context.Context)
 
 type SqlDB struct {
 	countries pgdb.CountriesQ
+	policies  pgdb.PoliciesQ
 }
 
 func NewDatabase(db *sql.DB) *Database {
-	countrySql := pgdb.NewCountriesQ(db)
-
 	return &Database{
 		sql: SqlDB{
-			countries: countrySql,
+			countries: pgdb.NewCountriesQ(db),
+			policies:  pgdb.NewPoliciesQ(db),
 		},
 	}
 }

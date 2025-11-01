@@ -10,6 +10,6 @@ properties:
     description: "country id"
   type:
     type: string
-    enum: [ country ]
+    enum: [ country_policy ]
   attributes:
-    $ref: './CountryAttributes.yaml'
+    $ref: './CountryPolicyAttributes.yaml'

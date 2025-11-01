@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/chains-lab/countries-svc/internal/domain/models"
-	"github.com/google/uuid"
 )
 
 type Service struct {
@@ -23,31 +22,34 @@ func NewService(db database, eve EventWriter) Service {
 type database interface {
 	Transaction(ctx context.Context, fn func(ctx context.Context) error) error
 
-	CreateCountry(ctx context.Context, country models.Country) (models.Country, error)
+	CreateCountry(ctx context.Context, country models.Country) (models.Country, models.Policy, error)
 
-	GetCountryByID(ctx context.Context, ID uuid.UUID) (models.Country, error)
-	GetCountryByName(ctx context.Context, name string) (models.Country, error)
+	GetCountryByID(ctx context.Context, ID string) (models.Country, error)
+
+	GetPolicyByCountryID(ctx context.Context, countryID string) (models.Policy, error)
 
 	FilterCountries(
 		ctx context.Context,
-		filters FilterParams,
+		filters FilterCountryParams,
 		page, size uint64,
 	) (models.CountriesCollection, error)
-
-	UpdateCountry(
+	FilterPolicies(
 		ctx context.Context,
-		countryID uuid.UUID,
-		params UpdateParams,
+		filters FilterPoliciesParams,
+		page, size uint64,
+	) (models.PoliciesCollection, error)
+
+	UpdatePolicy(
+		ctx context.Context,
+		countryID string,
+		params PolicyUpdateParams,
 		updatedAt time.Time,
 	) error
-
-	UpdateCountryStatus(ctx context.Context, countryID uuid.UUID, status string, updatedAt time.Time) error
 }
 
 type EventWriter interface {
-	UpdateCountryStatus(
+	UpdatedCountryPolicy(
 		ctx context.Context,
-		countryID uuid.UUID,
-		status string,
+		policy models.Policy,
 	) error
 }

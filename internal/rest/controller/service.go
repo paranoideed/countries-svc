@@ -6,24 +6,27 @@ import (
 	"github.com/chains-lab/countries-svc/internal/domain/models"
 	"github.com/chains-lab/countries-svc/internal/domain/services/country"
 	"github.com/chains-lab/logium"
-	"github.com/google/uuid"
 )
 
 type CountrySvc interface {
-	Create(ctx context.Context, name string) (models.Country, error)
+	CreateCountry(ctx context.Context, iso3ID string) (models.Country, error)
 
-	GetByID(ctx context.Context, ID uuid.UUID) (models.Country, error)
-	GetByName(ctx context.Context, name string) (models.Country, error)
-
-	Filter(
+	FilterCountry(
 		ctx context.Context,
-		filters country.FilterParams,
+		filters country.FilterCountryParams,
 		page, size uint64,
 	) (models.CountriesCollection, error)
 
-	UpdateStatus(ctx context.Context, countryID uuid.UUID, status string) (models.Country, error)
+	FilterPolicies(
+		ctx context.Context,
+		filters country.FilterPoliciesParams,
+		page, size uint64,
+	) (models.PoliciesCollection, error)
 
-	Update(ctx context.Context, ID uuid.UUID, params country.UpdateParams) (models.Country, error)
+	GeCountryByID(ctx context.Context, ID string) (models.Country, error)
+	GetPolicyByCountryID(ctx context.Context, countryID string) (models.Policy, error)
+
+	UpdatePolicy(ctx context.Context, countryID string, params country.PolicyUpdateParams) (models.Policy, error)
 }
 
 type domain struct {

@@ -4,8 +4,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Name** | **string** | country name | 
-**Status** | **string** | country status | 
 **CreatedAt** | **time.Time** | creation date | 
 **UpdatedAt** | **time.Time** | last update date | 
 
@@ -13,7 +11,7 @@ Name | Type | Description | Notes
 
 ### NewCountryAttributes
 
-`func NewCountryAttributes(name string, status string, createdAt time.Time, updatedAt time.Time, ) *CountryAttributes`
+`func NewCountryAttributes(createdAt time.Time, updatedAt time.Time, ) *CountryAttributes`
 
 NewCountryAttributes instantiates a new CountryAttributes object
 This constructor will assign default values to properties that have it defined,
@@ -27,46 +25,6 @@ will change when the set of required properties is changed
 NewCountryAttributesWithDefaults instantiates a new CountryAttributes object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
-
-### GetName
-
-`func (o *CountryAttributes) GetName() string`
-
-GetName returns the Name field if non-nil, zero value otherwise.
-
-### GetNameOk
-
-`func (o *CountryAttributes) GetNameOk() (*string, bool)`
-
-GetNameOk returns a tuple with the Name field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetName
-
-`func (o *CountryAttributes) SetName(v string)`
-
-SetName sets Name field to given value.
-
-
-### GetStatus
-
-`func (o *CountryAttributes) GetStatus() string`
-
-GetStatus returns the Status field if non-nil, zero value otherwise.
-
-### GetStatusOk
-
-`func (o *CountryAttributes) GetStatusOk() (*string, bool)`
-
-GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
-and a boolean to check if the value has been set.
-
-### SetStatus
-
-`func (o *CountryAttributes) SetStatus(v string)`
-
-SetStatus sets Status field to given value.
-
 
 ### GetCreatedAt
 

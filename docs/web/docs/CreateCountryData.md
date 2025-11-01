@@ -5,13 +5,13 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Type** | **string** |  | 
-**Attributes** | [**CreateCountryDataAttributes**](CreateCountryDataAttributes.md) |  | 
+**Id** | **string** | ISO 3166-1 alpha-3 | 
 
 ## Methods
 
 ### NewCreateCountryData
 
-`func NewCreateCountryData(type_ string, attributes CreateCountryDataAttributes, ) *CreateCountryData`
+`func NewCreateCountryData(type_ string, id string, ) *CreateCountryData`
 
 NewCreateCountryData instantiates a new CreateCountryData object
 This constructor will assign default values to properties that have it defined,
@@ -46,24 +46,24 @@ and a boolean to check if the value has been set.
 SetType sets Type field to given value.
 
 
-### GetAttributes
+### GetId
 
-`func (o *CreateCountryData) GetAttributes() CreateCountryDataAttributes`
+`func (o *CreateCountryData) GetId() string`
 
-GetAttributes returns the Attributes field if non-nil, zero value otherwise.
+GetId returns the Id field if non-nil, zero value otherwise.
 
-### GetAttributesOk
+### GetIdOk
 
-`func (o *CreateCountryData) GetAttributesOk() (*CreateCountryDataAttributes, bool)`
+`func (o *CreateCountryData) GetIdOk() (*string, bool)`
 
-GetAttributesOk returns a tuple with the Attributes field if it's non-nil, zero value otherwise
+GetIdOk returns a tuple with the Id field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
-### SetAttributes
+### SetId
 
-`func (o *CreateCountryData) SetAttributes(v CreateCountryDataAttributes)`
+`func (o *CreateCountryData) SetId(v string)`
 
-SetAttributes sets Attributes field to given value.
+SetId sets Id field to given value.
 
 
 

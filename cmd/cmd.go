@@ -8,6 +8,7 @@ import (
 	"github.com/chains-lab/countries-svc/internal"
 	"github.com/chains-lab/countries-svc/internal/data"
 	"github.com/chains-lab/countries-svc/internal/domain/services/country"
+	"github.com/chains-lab/countries-svc/internal/events/publisher"
 	"github.com/chains-lab/countries-svc/internal/rest"
 	"github.com/chains-lab/countries-svc/internal/rest/controller"
 	"github.com/chains-lab/countries-svc/internal/rest/middlewares"
@@ -30,8 +31,9 @@ func StartServices(ctx context.Context, cfg internal.Config, log logium.Logger, 
 	}
 
 	database := data.NewDatabase(pg)
+	eventWriter := publisher.New(cfg.Kafka.Broker)
 
-	countrySvc := country.NewService(database)
+	countrySvc := country.NewService(database, eventWriter)
 
 	ctrl := controller.New(log, countrySvc)
 	mdlv := middlewares.New(log)

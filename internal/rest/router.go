@@ -16,9 +16,10 @@ import (
 type Handlers interface {
 	CreateCountry(w http.ResponseWriter, r *http.Request)
 	ListCountries(w http.ResponseWriter, r *http.Request)
+	ListCountryPolicies(w http.ResponseWriter, r *http.Request)
 	GetCountry(w http.ResponseWriter, r *http.Request)
-	UpdateCountry(w http.ResponseWriter, r *http.Request)
-	UpdateCountryStatus(w http.ResponseWriter, r *http.Request)
+	GetCountryPolicy(w http.ResponseWriter, r *http.Request)
+	UpdateCountryPolicy(w http.ResponseWriter, r *http.Request)
 }
 
 type Middlewares interface {
@@ -41,12 +42,15 @@ func Run(ctx context.Context, cfg internal.Config, log logium.Logger, m Middlewa
 				r.With(auth, sysadmin).Post("/", h.CreateCountry)
 
 				r.Get("/", h.ListCountries)
+				r.Get("/policies", h.ListCountryPolicies)
 
 				r.Route("/{country_id}", func(r chi.Router) {
 					r.Get("/", h.GetCountry)
 
-					r.With(auth, sysadmin).Put("/", h.UpdateCountry)
-					r.With(auth, sysadmin).Patch("/status", h.UpdateCountryStatus)
+					r.Route("/policy", func(r chi.Router) {
+						r.Get("/", h.GetCountryPolicy)
+						r.With(auth, sysadmin).Put("/", h.UpdateCountryPolicy)
+					})
 				})
 			})
 		})

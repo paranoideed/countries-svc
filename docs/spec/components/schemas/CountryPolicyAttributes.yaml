@@ -1,8 +1,14 @@
 type: object
 required:
+  - cities_allowed_statuses
   - created_at
   - updated_at
 properties:
+  cities_allowed_statuses:
+    type: array
+    description: "List of allowed statuses for cities in the country"
+    items:
+      type: string
   created_at:
     type: string
     format: date-time

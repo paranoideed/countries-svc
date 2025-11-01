@@ -22,8 +22,8 @@ func CreateCountry(r *http.Request) (req resources.CreateCountry, err error) {
 	}
 
 	errs := validation.Errors{
-		"data/type":       validation.Validate(req.Data.Type, validation.Required, validation.In(resources.CreateCountryType)),
-		"data/attributes": validation.Validate(req.Data.Attributes, validation.Required),
+		"data/id":   validation.Validate(req.Data.Id, validation.Required, validation.Length(3, 3)),
+		"data/type": validation.Validate(req.Data.Type, validation.Required, validation.In(resources.CountryType)),
 	}
 	return req, errs.Filter()
 }

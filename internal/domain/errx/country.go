@@ -6,8 +6,6 @@ import (
 
 var ErrorCountryNotFound = ape.DeclareError("COUNTRY_NOT_FOUND")
 
-var ErrorInvalidCountryStatus = ape.DeclareError("INVALID_COUNTRY_STATUS")
+var ErrorCountryAlreadyExistsWithThisID = ape.DeclareError("COUNTRY_ALREADY_EXISTS_WITH_THIS_ID")
 
-var ErrorCountryAlreadyExistsWithThisName = ape.DeclareError("COUNTRY_ALREADY_EXISTS_WITH_THIS_NAME")
-
-var ErrorCountryIsNotSupported = ape.DeclareError("COUNTRY_NOT_SUPPORTED")
+var ErrorInvalidCountryISO3ID = ape.DeclareError("INVALID_COUNTRY_ISO3_ID")

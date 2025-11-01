@@ -8,17 +8,14 @@ import (
 	"time"
 
 	sq "github.com/Masterminds/squirrel"
-	"github.com/google/uuid"
 )
 
 const countriesTable = "countries"
 
 type Country struct {
-	ID        uuid.UUID `db:"id"`
-	Name      string    `db:"name"`
-	Status    string    `db:"status"`
-	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
+	ID        string
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 type CountriesQ struct {
 	db       *sql.DB
@@ -48,8 +45,6 @@ func (q CountriesQ) New() CountriesQ {
 func (q CountriesQ) Insert(ctx context.Context, input Country) error {
 	values := map[string]interface{}{
 		"id":         input.ID,
-		"name":       input.Name,
-		"status":     input.Status,
 		"created_at": input.CreatedAt,
 		"updated_at": input.UpdatedAt,
 	}
@@ -83,8 +78,6 @@ func (q CountriesQ) Get(ctx context.Context) (Country, error) {
 	}
 	err = row.Scan(
 		&model.ID,
-		&model.Name,
-		&model.Status,
 		&model.UpdatedAt,
 		&model.CreatedAt,
 	)
@@ -114,8 +107,6 @@ func (q CountriesQ) Select(ctx context.Context) ([]Country, error) {
 		var model Country
 		if err := rows.Scan(
 			&model.ID,
-			&model.Name,
-			&model.Status,
 			&model.UpdatedAt,
 			&model.CreatedAt,
 		); err != nil {
@@ -125,32 +116,6 @@ func (q CountriesQ) Select(ctx context.Context) ([]Country, error) {
 	}
 
 	return models, rows.Err()
-}
-
-func (q CountriesQ) Update(ctx context.Context, updatedAt time.Time) error {
-	q.updater = q.updater.Set("updated_at", updatedAt)
-
-	query, args, err := q.updater.ToSql()
-	if err != nil {
-		return fmt.Errorf("building update query for %s: %w", countriesTable, err)
-	}
-
-	if tx, ok := TxFromCtx(ctx); ok {
-		_, err = tx.ExecContext(ctx, query, args...)
-	} else {
-		_, err = q.db.ExecContext(ctx, query, args...)
-	}
-	return err
-}
-
-func (q CountriesQ) UpdateName(name string) CountriesQ {
-	q.updater = q.updater.Set("name", name)
-	return q
-}
-
-func (q CountriesQ) UpdateStatus(status string) CountriesQ {
-	q.updater = q.updater.Set("status", status)
-	return q
 }
 
 func (q CountriesQ) Delete(ctx context.Context) error {
@@ -168,49 +133,12 @@ func (q CountriesQ) Delete(ctx context.Context) error {
 	return err
 }
 
-func (q CountriesQ) FilterID(ID uuid.UUID) CountriesQ {
+func (q CountriesQ) FilterID(ID ...string) CountriesQ {
 	q.selector = q.selector.Where(sq.Eq{"id": ID})
 	q.counter = q.counter.Where(sq.Eq{"id": ID})
 	q.deleter = q.deleter.Where(sq.Eq{"id": ID})
 	q.updater = q.updater.Where(sq.Eq{"id": ID})
 
-	return q
-}
-
-func (q CountriesQ) FilterName(name string) CountriesQ {
-	q.selector = q.selector.Where(sq.Eq{"name": name})
-	q.counter = q.counter.Where(sq.Eq{"name": name})
-	q.deleter = q.deleter.Where(sq.Eq{"name": name})
-	q.updater = q.updater.Where(sq.Eq{"name": name})
-
-	return q
-}
-
-func (q CountriesQ) FilterStatus(status ...string) CountriesQ {
-	q.selector = q.selector.Where(sq.Eq{"status": status})
-	q.counter = q.counter.Where(sq.Eq{"status": status})
-	q.deleter = q.deleter.Where(sq.Eq{"status": status})
-	q.updater = q.updater.Where(sq.Eq{"status": status})
-
-	return q
-}
-
-func (q CountriesQ) FilterNameLike(name string) CountriesQ {
-	likePattern := fmt.Sprintf("%%%s%%", name)
-	q.selector = q.selector.Where(sq.ILike{"name": likePattern})
-	q.counter = q.counter.Where(sq.ILike{"name": likePattern})
-	q.deleter = q.deleter.Where(sq.ILike{"name": likePattern})
-	q.updater = q.updater.Where(sq.ILike{"name": likePattern})
-
-	return q
-}
-
-func (q CountriesQ) OrderByAlphabetical(asc bool) CountriesQ {
-	if asc {
-		q.selector = q.selector.OrderBy("name ASC")
-	} else {
-		q.selector = q.selector.OrderBy("name DESC")
-	}
 	return q
 }
 
